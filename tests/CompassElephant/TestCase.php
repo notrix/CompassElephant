@@ -13,26 +13,25 @@
 
 namespace CompassElephant;
 
-use CompassElephant\StalenessChecker\FinderStalenessChecker,
-    CompassElephant\StalenessChecker\NativeStalenessChecker;
-
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-    private $path;
-    private $binary;
     /**
-     * @var \CompassElephant\CommandCaller
+     * @var string
      */
-    private $commandCaller;
+    private $path;
+
     /**
      * @var \CompassElephant\CompassProject
      */
     private $compassProject;
 
-
+    /**
+     * Project initialization
+     */
     public function initProject()
     {
         $tempDir = realpath(sys_get_temp_dir()).'compass_elephant_'.md5(uniqid(rand(),1));
+        mkdir($tempDir);
         $tempName = tempnam($tempDir, 'compass_elephant');
         $this->path = $tempName;
         unlink($this->path);
@@ -72,6 +71,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         return $this->compassProject;
     }
 
+    /**
+     * @param string $style
+     */
     protected function writeStyle($style)
     {
         sleep(1.1);
